@@ -1,0 +1,8 @@
+.argument,
+.argument-image {
+  display: none;
+}
+.argument.active,
+.argument-image.active {
+  display: block;
+}

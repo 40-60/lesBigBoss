@@ -1,5 +1,5 @@
-require("./animations/custom-cursor.js").default();
-require("./animations/line-highlight.js").default();
+require("../animations/custom-cursor.js")();
+require("../animations/line-highlight.js")();
 
 // --- Animation du hero ---
 const viewportHeight = window.innerHeight;
@@ -7,6 +7,9 @@ const viewportHeight = window.innerHeight;
 const video = document.querySelector(".home_hero_video");
 const heading1 = document.querySelector(".heading-style-display_hero._1");
 const heading2 = document.querySelector(".heading_corail_wrapper");
+const headingCorailWrapper = document.querySelector(".heading_corail_wrapper");
+
+headingCorailWrapper.style.overflow = "hidden";
 
 if (!video || !heading1 || !heading2) {
   console.error("Missing one or more required elements");
@@ -118,7 +121,7 @@ function animateStep() {
   headings.forEach((el) => {
     gsap.to(el, {
       yPercent: -100 * currentStep,
-      duration: 1,
+      duration: 0.8,
       ease: "power3.inOut",
     });
   });
@@ -126,4 +129,6 @@ function animateStep() {
 
 // Démarre le carrousel
 animateStep();
-setInterval(animateStep, delayBetween * 1400);
+setTimeout(() => {
+  setInterval(animateStep, delayBetween * 1000);
+}, 10);

@@ -1,4 +1,4 @@
-exports.default = function autoSlider() {
+module.exports = function autoSlider() {
   if (typeof window.gsap === "undefined")
     document.documentElement.classList.add("gsap-not-found");
 

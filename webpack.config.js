@@ -3,11 +3,18 @@ const path = require("path");
 module.exports = {
   mode: "production",
   entry: {
-    ["global"]: "./src/global.js",
-    ["accueil"]: "./src/accueil.js",
-    ["pourquoi-participer/business"]: "./src/pourquoi-participer/business.js",
+    ["global"]: "./src/pages/global.js",
+    ["accueil"]: "./src/pages/accueil.js",
+    ["pourquoi-participer/business"]:
+      "./src/pages/pourquoi-participer/business.js",
+    ["devenez-participant/c-level"]:
+      "./src/pages/devenez-participant/c-level.js",
+    ["a-propos/notre-equipe"]: "./src/pages/a-propos/notre-equipe.js",
+    ["a-propos/qui-sommes-nous"]: "./src/pages/a-propos/qui-sommes-nous.js",
     ["test-page"]: "./src/test-page.js",
-    ["contact"]: "./src/contact.js",
+    ["contact"]: "./src/pages/contact.js",
+    ["event-details"]: "./src/pages/event-details.js",
+    ["events/home"]: "./src/pages/events/home.js",
   },
   output: {
     path: path.resolve(__dirname, "dist"),

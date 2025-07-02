@@ -2,9 +2,6 @@ module.exports = function lineHighlight() {
   // Animation chiffres sectionChiffres
   const sectionChiffres = document.querySelector(".section_chiffres");
   const highlightItems = document.querySelectorAll(".chiffres_item");
-  const highlightImages = document.querySelectorAll(".chiffres_img");
-
-  highlightImages.forEach((img) => img.classList.remove("is-active"));
 
   if (!sectionChiffres || highlightItems.length === 0) return;
 
@@ -29,22 +26,17 @@ module.exports = function lineHighlight() {
       // Remove all if out of range
       if (progress < 0 || progress >= 1) {
         highlightItems.forEach((item) => {
-          item.classList.remove("background-color-velour");
-          const img = item.querySelector(".chiffres_img");
-          if (img) img.classList.remove("is-active");
+          item.setAttribute("bg-color", "1000");
         });
         return;
       }
       highlightItems.forEach((item, i) => {
-        const img = item.querySelector(".chiffres_img");
         const start = i / itemCount;
         const end = (i + 1) / itemCount;
         if (progress > start && progress < end) {
-          item.classList.add("background-color-velour");
-          if (img) img.classList.add("is-active");
+          item.setAttribute("bg-color", "950");
         } else {
-          item.classList.remove("background-color-velour");
-          if (img) img.classList.remove("is-active");
+          item.setAttribute("bg-color", "1000");
         }
       });
     },

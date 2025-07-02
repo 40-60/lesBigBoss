@@ -1,4 +1,4 @@
-exports.default = function customCursor() {
+module.exports = function customCursor() {
   // Custom curseur
   const cursor = document.querySelector(".custom_cursor");
   let mouseX = 0;
@@ -31,6 +31,7 @@ exports.default = function customCursor() {
           "hero",
           "argument",
           "social",
+          "testimonial",
         ].find((cls) => target.classList.contains(cls));
         const displayClass = `${targetClass}_cc`;
 
