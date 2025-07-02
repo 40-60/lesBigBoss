@@ -1,0 +1,1 @@
+!function(e,o){"object"==typeof exports&&"object"==typeof module?module.exports={}:"function"==typeof define&&define.amd?define("a-propos/notre-equipe",[],o):"object"==typeof exports?exports["a-propos/notre-equipe"]={}:e["a-propos/notre-equipe"]={}}(this,()=>({}));
