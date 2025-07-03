@@ -1,5 +1,6 @@
 require("../animations/custom-cursor.js")();
 require("../animations/line-highlight.js")();
+require("../animations/images-parallax.js")();
 
 // --- Animation du hero ---
 const viewportHeight = window.innerHeight;
@@ -63,6 +64,18 @@ tlHeading1.fromTo(
   { height: "100%", ...commonAnimationSettings },
   1.5
 );
+
+// Fade in #scroll-text at the same time as video scale up
+const scrollText = document.querySelector("#scroll-text");
+scrollText.style.opacity = 0;
+if (scrollText) {
+  gsap.set(scrollText, { opacity: 0 });
+  tlHeading1.to(
+    scrollText,
+    { opacity: 1, duration: 1.3, ease: "power3.inOut" },
+    1.5
+  );
+}
 
 // Scroll-trigger animations
 const scrollTriggerSettings = {

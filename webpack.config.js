@@ -12,6 +12,7 @@ module.exports = {
     ["a-propos/notre-equipe"]: "./src/pages/a-propos/notre-equipe.js",
     ["a-propos/qui-sommes-nous"]: "./src/pages/a-propos/qui-sommes-nous.js",
     ["test-page"]: "./src/test-page.js",
+    ["agenda"]: "./src/pages/agenda.js",
     ["contact"]: "./src/pages/contact.js",
     ["event-details"]: "./src/pages/event-details.js",
     ["events/home"]: "./src/pages/events/home.js",

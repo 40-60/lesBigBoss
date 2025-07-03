@@ -14,9 +14,6 @@ module.exports = function orderedSteps() {
   formatsSteps.forEach((el, idx) => {
     el.classList.remove("is-active");
     el.style.position = "absolute";
-    if (orderedStepsHeadings[idx]) {
-      orderedStepsHeadings[idx].classList.remove("text-color-corail");
-    }
     if (formatsLinks[idx]) {
       formatsLinks[idx].classList.remove("is-active");
     }

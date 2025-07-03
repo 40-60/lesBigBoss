@@ -1,65 +1,60 @@
-$(".slider-component").each(function (index) {
-  const swiper = new Swiper($(this).find(".swiper")[0], {
-    speed: 750,
-    loop: true,
-    autoHeight: false,
-    centeredSlides: false,
-    followFinger: true,
-    freeMode: false,
-    slidesPerView: "auto",
-    // autoplay: {
-    //   delay: 1500,
-    //   disableOnInteraction: false,
-    // },
-    disableOnInteraction: false,
-    mousewheel: {
-      forceToAxis: true,
-    },
-    keyboard: {
-      enabled: true,
-      onlyInViewport: true,
-    },
-    breakpoints: {
-      // mobile landscape
-      480: {
-        slidesPerView: "auto",
-      },
-      // tablet
-      768: {
-        slidesPerView: "auto",
-      },
-      // desktop
-      992: {
-        slidesPerView: "auto",
-      },
-    },
-    pagination: {
-      el: $(this).find(".swiper-bullet-wrapper")[0],
-      bulletActiveClass: "is-active",
-      bulletClass: "swiper-bullet",
-      bulletElement: "button",
-      clickable: true,
-    },
-    navigation: {
-      nextEl: $(this).find(".swiper-next")[0],
-      prevEl: $(this).find(".swiper-prev")[0],
-      disabledClass: "is-disabled",
-    },
-    scrollbar: {
-      el: $(this).find(".swiper-drag-wrapper")[0],
-      draggable: true,
-      dragClass: "swiper-drag",
-      snapOnRelease: true,
-    },
-    slideActiveClass: "is-active",
-    slideDuplicateActiveClass: "is-active",
-  });
-  //
+document.addEventListener("DOMContentLoaded", () => {
+  // --- Appliquer les classes _2 sur certains articles ---
+  function applyArticleClasses() {
+    // Nettoyer les anciennes classes
+    document
+      .querySelectorAll(".article_img._2, .article_item._2")
+      .forEach((el) => el.classList.remove("_2"));
 
-  swiper.on("activeIndexChange", function (e) {
-    let cardLabel = $(e.slides[e.activeIndex]).attr("CardLabel");
-    let cardColor = $(e.slides[e.activeIndex]).attr("CardColor");
-    $(".active-card-label").text(cardLabel);
-    $(".active-card-label").css("color", cardColor);
-  });
+    const width = window.innerWidth;
+
+    const imgs = document.querySelectorAll(".article_img");
+    const items = document.querySelectorAll(".article_item");
+
+    if (width <= 478) {
+      // --- Mobile : toutes les images ont _2, aucun bloc
+      imgs.forEach((img) => img.classList.add("_2"));
+    } else if (width <= 767) {
+      // --- Mobile landscape : 2 par ligne avec inversion toutes les 2 lignes
+      const itemsPerRow = 2;
+      imgs.forEach((img, i) => {
+        const groupIndex = Math.floor(i / itemsPerRow);
+        const positionInGroup = (i % itemsPerRow) + 1;
+        const isReversed = groupIndex % 2 === 1;
+
+        if (
+          (!isReversed && positionInGroup === 2) ||
+          (isReversed && positionInGroup === 1)
+        ) {
+          img.classList.add("_2");
+        }
+      });
+
+      items.forEach((el, i) => {
+        const groupIndex = Math.floor(i / itemsPerRow);
+        if (groupIndex % 2 === 1) {
+          el.classList.add("_2");
+        }
+      });
+    } else {
+      // --- Tablette & Desktop : 3 par ligne, 1 sur 2 pour les images, blocs spécifiques
+      imgs.forEach((img, i) => {
+        if (i % 2 === 1) {
+          img.classList.add("_2");
+        }
+      });
+
+      // Blocs _2 de 4 à 6, 10 à 12, etc. (index 3–5, 9–11, etc.)
+      items.forEach((el, i) => {
+        const groupIndex = Math.floor(i / 6);
+        const positionInGroup = i % 6;
+        if (positionInGroup >= 3 && positionInGroup <= 5) {
+          el.classList.add("_2");
+        }
+      });
+    }
+  }
+
+  applyArticleClasses();
+  window.addEventListener("resize", applyArticleClasses);
 });

@@ -1,5 +1,6 @@
 module.exports = function customCursor() {
   // Custom curseur
+  if (window.innerWidth < 991) return; // 62rem in px
   const cursor = document.querySelector(".custom_cursor");
   let mouseX = 0;
   let mouseY = 0;
@@ -47,7 +48,7 @@ module.exports = function customCursor() {
       }
     }
 
-    document.addEventListener("mousemove", updateCursor);
+    window.addEventListener("pointermove", updateCursor);
     document.addEventListener(
       "scroll",
       () => {

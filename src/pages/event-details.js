@@ -2,14 +2,16 @@ require("../animations/steps-reveal.js")();
 require("../animations/custom-cursor.js")();
 require("../animations/line-highlight.js")();
 
-const eventDateElement = document.getElementById("event_date");
+// Select all elements with the 'event-date' attribute
+const eventDateElements = document.querySelectorAll("[event-date]");
 const eventDay = document.getElementById("event_day");
 const eventHour = document.getElementById("event_hour");
 const eventMin = document.getElementById("event_min");
 
-if (!eventDateElement || !eventDay || !eventHour || !eventMin) return;
+if (!eventDateElements.length || !eventDay || !eventHour || !eventMin) return;
 
-const rawDate = eventDateElement.textContent.trim(); // Ex: "11/1/2025"
+// Use the first event-date element for countdown reference
+const rawDate = eventDateElements[0].textContent.trim(); // Ex: "11/1/2025"
 const [day, month, year] = rawDate.split("/").map(Number);
 
 const eventDate = new Date(year, month - 1, day);
@@ -44,7 +46,11 @@ const moisNom = mois[eventDate.getMonth()];
 const jour = eventDate.getDate();
 const annee = eventDate.getFullYear();
 
-eventDateElement.textContent = `${jourNom} ${jour} ${moisNom} ${annee}`;
+// Set formatted date to all elements with 'event-date' attribute
+const formattedDate = `${jourNom} ${jour} ${moisNom} ${annee}`;
+eventDateElements.forEach((el) => {
+  el.textContent = formattedDate;
+});
 
 // Fonction de mise à jour du compte à rebours
 function updateCountdown() {

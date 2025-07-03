@@ -1,6 +1,7 @@
 require("../../animations/custom-cursor.js")();
 require("../../animations/line-highlight.js")();
 require("../../animations/steps-reveal.js")();
+require("../../animations/accordion-steps.js")();
 
 $(".slider-component").each(function (index) {
   const swiper = new Swiper($(this).find(".swiper")[0], {

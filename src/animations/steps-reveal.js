@@ -2,24 +2,40 @@ module.exports = function stepsReveal() {
   let scrollTriggerInstance = null;
 
   function enableArgumentReveal() {
-    const contents = document.querySelectorAll(".argument_content");
-    const images = document.querySelectorAll(".argument_img");
-    const argumentGrids = document.querySelectorAll(".argument_grid");
+    const argumentContents = document.querySelectorAll(".argument_content");
+    const argumentImages = document.querySelectorAll(".argument_img");
+    const argumentGrids = Array.from(
+      document.querySelectorAll(".argument_grid")
+    );
+
+    if (window.innerWidth <= 991) {
+      return;
+    }
+
+    function setGridPointerEvents(activeIdx) {
+      argumentGrids.forEach((grid, idx) => {
+        grid.style.pointerEvents = idx === activeIdx ? "auto" : "none";
+      });
+    }
+
+    setGridPointerEvents(0);
 
     argumentGrids.forEach((grid, index) => {
       if (index !== 0) {
         grid.style.position = "absolute";
+      } else {
+        grid.style.pointerEvents = "auto";
       }
     });
 
-    contents.forEach((el, index) => {
+    argumentContents.forEach((el, index) => {
       gsap.set(el, {
         opacity: index === 0 ? 1 : 0,
         y: index === 0 ? 0 : 200,
       });
     });
 
-    images.forEach((el, index) => {
+    argumentImages.forEach((el, index) => {
       gsap.set(el, {
         opacity: index === 0 ? 1 : 0,
       });
@@ -62,7 +78,7 @@ module.exports = function stepsReveal() {
       pendingIndex = null;
       const isScrollingDown = newIndex > currentIndex;
 
-      gsap.set(contents[newIndex], {
+      gsap.set(argumentContents[newIndex], {
         y: isScrollingDown ? 200 : -200,
         opacity: 0,
       });
@@ -74,10 +90,12 @@ module.exports = function stepsReveal() {
           if (pendingIndex !== null && pendingIndex !== currentIndex) {
             animateToIndex(pendingIndex);
           }
+          // Set pointer-events for argument_grids
+          setGridPointerEvents(currentIndex);
         },
       });
 
-      timeline.to(contents[currentIndex], {
+      timeline.to(argumentContents[currentIndex], {
         opacity: 0,
         y: isScrollingDown ? -300 : 300,
         duration: 0.4,
@@ -85,7 +103,7 @@ module.exports = function stepsReveal() {
       });
 
       timeline.to(
-        images[currentIndex],
+        argumentImages[currentIndex],
         {
           opacity: 0,
           duration: 0.4,
@@ -95,7 +113,7 @@ module.exports = function stepsReveal() {
       );
 
       timeline.to(
-        contents[newIndex],
+        argumentContents[newIndex],
         {
           opacity: 1,
           y: 0,
@@ -106,7 +124,7 @@ module.exports = function stepsReveal() {
       );
 
       timeline.to(
-        images[newIndex],
+        argumentImages[newIndex],
         {
           opacity: 1,
           duration: 0.4,
@@ -123,15 +141,15 @@ module.exports = function stepsReveal() {
       scrollTriggerInstance = null;
     }
     // Remettre les styles à l'état normal si < 991px
-    const contents = document.querySelectorAll(".argument_content");
-    const images = document.querySelectorAll(".argument_img");
+    const argumentContents = document.querySelectorAll(".argument_content");
+    const argumentImages = document.querySelectorAll(".argument_img");
     const argumentGrids = document.querySelectorAll(".argument_grid");
 
-    contents.forEach((el) => {
+    argumentContents.forEach((el) => {
       el.style.opacity = "1";
       el.style.transform = "none";
     });
-    images.forEach((el) => {
+    argumentImages.forEach((el) => {
       el.style.opacity = "1";
     });
     argumentGrids.forEach((grid) => {
@@ -139,48 +157,73 @@ module.exports = function stepsReveal() {
     });
   }
 
-  module.exports = function argumentReveal() {
-    function handleResize() {
-      if (window.innerWidth <= 991) {
-        disableArgumentReveal();
-        return;
-      }
-      if (!scrollTriggerInstance) {
-        enableArgumentReveal();
-      }
+  function handleResize() {
+    if (window.innerWidth <= 991) {
+      disableArgumentReveal();
+      return;
     }
+    if (!scrollTriggerInstance) {
+      enableArgumentReveal();
+    }
+  }
 
-    // Initial check
-    handleResize();
+  // Initial check
+  handleResize();
 
-    // Listen to resize
-    window.addEventListener("resize", handleResize);
+  // Listen to resize
+  window.addEventListener("resize", handleResize);
 
-    // Ajout du scroll sur clic des .dot-8
-    const dots = document.querySelectorAll(".dot-8");
-    const section = document.querySelector(".section_argument");
-    if (dots.length && section) {
-      const sectionRect = section.getBoundingClientRect();
-      const sectionTop = window.scrollY + sectionRect.top;
-      const sectionHeight = section.offsetHeight;
+  // Dynamically create dots based on the number of argument_grids
+  const argumentDotWrappers = Array.from(
+    document.querySelectorAll(".argument_dot_wrapper")
+  );
+  const argumentGrids = Array.from(document.querySelectorAll(".argument_grid"));
+  const numGrids = argumentGrids.length;
 
-      [0, 1, 2].forEach((i) => {
-        if (dots[i]) {
-          dots[i].addEventListener("click", () => {
-            let percent = 0;
-            if (i === 1) percent = 0.33;
-            if (i === 2) percent = 0.66;
-            const targetScroll = sectionTop + sectionHeight * percent;
-            gsap.to(window, {
-              scrollTo: { y: targetScroll, autoKill: false },
-              duration: 1,
-              ease: "power2.out",
-            });
-          });
+  function createDots(numGrids) {
+    argumentDotWrappers.forEach((wrapper, wrapperIdx) => {
+      wrapper.innerHTML = "";
+      for (let i = 0; i < numGrids; i++) {
+        const dot = document.createElement("div");
+        dot.className = "dot-8 cursor-pointer background-color-gs-300";
+        if (i === wrapperIdx) {
+          dot.classList.remove("background-color-gs-300");
+          dot.classList.add("background-color-velour");
         }
-      });
-    }
+        wrapper.appendChild(dot);
+      }
+    });
+  }
 
-    // Optionally: return a cleanup function if needed
-  };
+  createDots(argumentGrids.length);
+
+  // Ajout du scroll sur clic des .dot-8
+  const dots = Array.from(document.querySelectorAll(".dot-8"));
+  const section = document.querySelector(".section_argument");
+  if (dots.length && section) {
+    const sectionRect = section.getBoundingClientRect();
+    const sectionTop = window.scrollY + sectionRect.top;
+    const sectionHeight = section.offsetHeight;
+    const numGrids = argumentGrids.length;
+    const minPercent = 0.1;
+    const maxPercent = 0.6;
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => {
+        const gridIndex = i % numGrids;
+        const percent =
+          numGrids === 1
+            ? 0.5
+            : minPercent +
+              (maxPercent - minPercent) * (gridIndex / (numGrids - 1));
+        const targetScroll = sectionTop + sectionHeight * percent;
+        window.scrollTo({
+          top: targetScroll,
+          behavior: "smooth",
+        });
+      });
+    });
+  }
+
+  enableArgumentReveal();
 };
