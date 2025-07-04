@@ -27,13 +27,16 @@ module.exports = function orderedSteps() {
 
   ScrollTrigger.create({
     trigger: document.querySelector(".meeting_formats_grid"),
-    start: "top 50%",
-    end: "bottom top",
+    start: "top 10%",
+    end: "bottom 20%",
     scrub: true,
     onUpdate: (self) => {
       const progress = self.progress;
       const stepsCount = formatsSteps.length;
       let activeIndex = Math.floor(progress * stepsCount);
+      console.log(`Scroll progress: ${activeIndex}`);
+      console.log(`Scroll progress: ${progress.toFixed(2)}`);
+
       if (activeIndex >= stepsCount) activeIndex = stepsCount - 1;
 
       // Only update if changed

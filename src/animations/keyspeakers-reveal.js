@@ -15,6 +15,7 @@ module.exports = function keyspeakersReveal() {
     const displayMedium = detail.querySelector(".heading-style-display-medium");
     if (displayMedium) {
       gsap.set(displayMedium, { x: i === 0 ? "3rem" : "0rem" });
+      displayMedium.style.color = i === 0 ? "white" : "";
     }
   });
   pills.forEach((pill, i) => gsap.set(pill, { opacity: i === 0 ? 1 : 0 }));
@@ -38,6 +39,7 @@ module.exports = function keyspeakersReveal() {
           );
           if (otherDisplayMedium) {
             gsap.to(otherDisplayMedium, { x: "0rem", duration: 0 });
+            otherDisplayMedium.style.color = "";
           }
         }
       });
@@ -48,6 +50,7 @@ module.exports = function keyspeakersReveal() {
       // Déplacement de .heading-style-display-medium de 3rem vers la droite
       if (displayMedium) {
         gsap.to(displayMedium, { x: "3rem", duration: 0 });
+        displayMedium.style.color = "white";
       }
       // Affichage du pill correspondant
       pills.forEach((pill, j) => {

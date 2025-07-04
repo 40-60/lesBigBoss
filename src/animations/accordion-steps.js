@@ -10,13 +10,15 @@ module.exports = function accordionSteps() {
     return;
   }
 
-  const section = document.querySelector(".section_accordion");
+  const section = document.querySelector(".section_scroll_accordion");
   const stickyWrapper = document.querySelector(".accordion_sticky_wrapper");
   if (!section || !stickyWrapper) return;
 
   const overlines = section.querySelectorAll(".heading-style-overline");
   const svgs = section.querySelectorAll(".svg.text-color-gs-300");
-  const accordionContents = section.querySelectorAll(".accordion_content");
+  const accordionContents = section.querySelectorAll(
+    ".scroll_accordion_content"
+  );
   const accordionProgress = section.querySelectorAll(".accordion_progress");
   const steps = accordionContents.length;
   const accordionImages = section.querySelectorAll(".accordion_img");
@@ -71,6 +73,9 @@ module.exports = function accordionSteps() {
       accordionContents.forEach(
         (el, idx) => (el.style.height = idx === activeIdx ? "auto" : "0px")
       );
+      accordionImages.forEach((el, idx) => {
+        el.style.opacity = idx === activeIdx ? "1" : "0";
+      });
       accordionProgress.forEach((el, idx) => {
         let start = idx * segment;
         let end = (idx + 1) * segment;

@@ -16,6 +16,8 @@ module.exports = {
     ["contact"]: "./src/pages/contact.js",
     ["event-details"]: "./src/pages/event-details.js",
     ["events/home"]: "./src/pages/events/home.js",
+    ["events/programme"]: "./src/pages/events/programme.js",
+    ["events/participant"]: "./src/pages/events/participant.js",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
