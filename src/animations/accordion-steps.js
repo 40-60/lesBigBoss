@@ -22,34 +22,40 @@ module.exports = function accordionSteps() {
   const accordionProgress = section.querySelectorAll(".accordion_progress");
   const steps = accordionContents.length;
   const accordionImages = section.querySelectorAll(".accordion_img");
+  const imgWrapper = section.querySelector("#accordion-img-wrapper");
+
+  imgWrapper.classList.add("overflow-hidden");
 
   // Initial state
-  overlines.forEach((el, idx) =>
-    el.classList.toggle("text-color-prune", idx === 0)
-  );
-  svgs.forEach((el, idx) =>
-    el.classList.toggle("text-color-corail", idx === 0)
-  );
+  overlines.forEach((el, idx) => {
+    el.classList.toggle("text-color-prune", idx === 0);
+    el.setAttribute("text-color", idx === 0 ? "white" : "300");
+  });
+  svgs.forEach((el, idx) => {
+    el.classList.add("text-color-corail", idx === 0);
+    el.classList.remove("text-color-gs-300");
+    el.setAttribute("text-color", idx === 0 ? "400" : "300");
+  });
   accordionContents.forEach(
     (el, idx) => (el.style.height = idx === 0 ? "auto" : "0px")
   );
   accordionProgress.forEach((el) => (el.style.width = "0%"));
-  if (window.innerWidth > 991) {
-    accordionImages.forEach((el) => {
-      el.style.position = "absolute";
-    });
-  }
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 991) {
-      accordionImages.forEach((el) => {
-        el.style.position = "absolute";
-      });
-    } else {
-      accordionImages.forEach((el) => {
-        el.style.position = "static";
-      });
-    }
-  });
+  // if (window.innerWidth > 991) {
+  //   accordionImages.forEach((el) => {
+  //     el.style.position = "absolute";
+  //   });
+  // }
+  // window.addEventListener("resize", () => {
+  //   if (window.innerWidth > 991) {
+  //     accordionImages.forEach((el) => {
+  //       el.style.position = "absolute";
+  //     });
+  //   } else {
+  //     accordionImages.forEach((el) => {
+  //       el.style.position = "static";
+  //     });
+  //   }
+  // });
 
   // GSAP ScrollTrigger
   window.ScrollTrigger.create({
@@ -64,17 +70,32 @@ module.exports = function accordionSteps() {
       if (activeIdx < 0) activeIdx = 0;
       if (activeIdx >= steps) activeIdx = steps - 1;
 
-      overlines.forEach((el, idx) =>
-        el.classList.toggle("text-color-prune", idx === activeIdx)
-      );
-      svgs.forEach((el, idx) =>
-        el.classList.toggle("text-color-corail", idx === activeIdx)
-      );
+      overlines.forEach((el, idx) => {
+        el.classList.toggle("text-color-prune", idx === activeIdx);
+        el.setAttribute("text-color", idx === activeIdx ? "white" : "300");
+      });
+      svgs.forEach((el, idx) => {
+        if (idx === activeIdx) {
+          el.classList.add("text-color-corail");
+          el.classList.remove("text-color-gs-300");
+          el.setAttribute("text-color", "400");
+        } else {
+          el.classList.remove("text-color-corail");
+          el.classList.add("text-color-gs-300");
+          el.setAttribute("text-color", "300");
+        }
+      });
       accordionContents.forEach(
         (el, idx) => (el.style.height = idx === activeIdx ? "auto" : "0px")
       );
+      // accordionImages.forEach((el, idx) => {
+      //   el.style.opacity = idx === activeIdx ? "1" : "0";
+      // });
+      // Apply transform to images based on active index
       accordionImages.forEach((el, idx) => {
-        el.style.opacity = idx === activeIdx ? "1" : "0";
+        const transformY =
+          idx === activeIdx ? -(idx * 100) + "%" : -(activeIdx * 100) + "%";
+        el.style.transform = `translateY(${transformY})`;
       });
       accordionProgress.forEach((el, idx) => {
         let start = idx * segment;

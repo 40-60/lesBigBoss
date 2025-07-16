@@ -2,61 +2,63 @@ module.exports = function orderedSteps() {
   const formatsLinks = document.querySelectorAll(
     ".meeting_formats_grid .heading-style-overline"
   );
-  const formatsSteps = document.querySelectorAll(".meeting_formats_step");
+  const formatsSteps = document.querySelectorAll(
+    ".meeting_formats_grid .heading-style-display-medium"
+  );
+  const formatsStepsWrapper = document.querySelector(".meeting_formats_steps");
   const orderedStepsHeadings = document.querySelectorAll(
     ".ordered_steps_headings"
   );
 
+  formatsStepsWrapper.style.overflow = "hidden"; // Ensure overflow is hidden
+
   // Early exit if no steps or links
   if (!formatsLinks.length || !formatsSteps.length) return;
 
-  // Reset all steps and set initial state
-  formatsSteps.forEach((el, idx) => {
-    el.classList.remove("is-active");
-    el.style.position = "absolute";
-    if (formatsLinks[idx]) {
-      formatsLinks[idx].classList.remove("is-active");
-    }
+  // Set initial state: all steps at y=0
+  formatsSteps.forEach((el) => {
+    el.style.transform = `translateY(0%)`;
   });
-
-  formatsSteps[0].classList.add("is-active");
-  formatsLinks[0].classList.add("is-active");
+  formatsLinks[0].classList.add("text-color-corail");
+  formatsLinks[0].setAttribute("text-color", "300");
   if (orderedStepsHeadings[0]) {
     orderedStepsHeadings[0].classList.add("text-color-corail");
+    orderedStepsHeadings[0].setAttribute("text-color", "300");
   }
 
   ScrollTrigger.create({
     trigger: document.querySelector(".meeting_formats_grid"),
-    start: "top 10%",
-    end: "bottom 20%",
+    start: "top 25%",
+    end: "bottom 25%",
     scrub: true,
     onUpdate: (self) => {
       const progress = self.progress;
       const stepsCount = formatsSteps.length;
       let activeIndex = Math.floor(progress * stepsCount);
-      console.log(`Scroll progress: ${activeIndex}`);
-      console.log(`Scroll progress: ${progress.toFixed(2)}`);
-
       if (activeIndex >= stepsCount) activeIndex = stepsCount - 1;
 
       // Only update if changed
-      if (
-        !formatsSteps[activeIndex].classList.contains("is-active") ||
-        !formatsLinks[activeIndex].classList.contains("is-active")
-      ) {
+      if (!formatsLinks[activeIndex].classList.contains("is-active")) {
         formatsLinks.forEach((el, idx) => {
-          el.classList.toggle("is-active", idx === activeIndex);
-        });
-        formatsSteps.forEach((el, idx) => {
-          el.classList.toggle("is-active", idx === activeIndex);
-          if (orderedStepsHeadings[idx]) {
-            orderedStepsHeadings[idx].classList.toggle(
-              "text-color-corail",
-              idx === activeIndex
-            );
+          if (idx === activeIndex) {
+            el.classList.add("text-color-corail");
+            el.classList.remove("text-color-gs-300");
+          } else {
+            el.classList.remove("text-color-corail");
+            el.classList.add("text-color-gs-300");
           }
+          el.setAttribute("text-color", idx === activeIndex ? "300" : "");
         });
       }
+      // Move all steps together
+      const y = -activeIndex * 100;
+      formatsSteps.forEach((el) => {
+        el.style.transform = `translateY(${y}%)`;
+      });
+      orderedStepsHeadings.forEach((el, idx) => {
+        el.classList.toggle("text-color-corail", idx === activeIndex);
+        el.setAttribute("text-color", idx === activeIndex ? "300" : "");
+      });
     },
   });
 };

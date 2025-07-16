@@ -17,7 +17,7 @@ module.exports = function customCursor() {
       gsap.to(cursor, {
         x: mouseX,
         y: mouseY,
-        duration: 0.2,
+        duration: 0.8,
         ease: "power2.out",
       });
 
