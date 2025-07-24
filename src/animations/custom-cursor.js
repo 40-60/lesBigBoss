@@ -33,6 +33,7 @@ module.exports = function customCursor() {
           "argument",
           "social",
           "testimonial",
+          "team",
         ].find((cls) => target.classList.contains(cls));
         const displayClass = `${targetClass}_cc`;
 

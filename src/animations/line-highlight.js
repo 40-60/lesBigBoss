@@ -1,4 +1,6 @@
 module.exports = function lineHighlight() {
+  if (window.innerWidth <= 991) return;
+
   // Animation chiffres sectionChiffres
   const sectionChiffres = document.querySelector(".section_chiffres");
   const highlightItems = document.querySelectorAll(".chiffres_item");
@@ -17,48 +19,89 @@ module.exports = function lineHighlight() {
   }
   window.lineHighlightScrollTriggers = [];
 
-  const itemCount = highlightItems.length;
+  // Remove previous event listeners if any
+  highlightItems.forEach((item) => {
+    item.onmouseenter = null;
+    item.onmouseleave = null;
+  });
 
-  // Create a single ScrollTrigger for the sectionChiffres
-  // Animation starts when sectionChiffres enters viewport at 50% from the top,
-  // and ends when 50% of sectionChiffres is left in the viewport
-  const trigger = ScrollTrigger.create({
-    trigger: sectionChiffres,
-    start: "top 50%",
-    end: "bottom 50%",
-    scrub: true,
-    onUpdate: (self) => {
-      const progress = self.progress; // 0 to 1 between start and end
-      // Remove all highlights if out of range
-      if (progress < 0 || progress >= 1) {
-        highlightItems.forEach((item) => {
-          item.setAttribute("bg-color", "1000");
-          item.classList.remove("background-color-velour");
-          const img = item.querySelector(".chiffres_img");
-          if (img) img.classList.remove("is-active");
-          const lineImg = item.querySelector(".line_highlight_img");
-          if (lineImg) lineImg.classList.remove("is-active");
-        });
-        return;
+  // Add hover and mousemove listeners to each highlightItem
+  let animationFrame;
+  let targetX = 0,
+    targetY = 0,
+    currentX = 0,
+    currentY = 0;
+  let hoveredItem = null;
+
+  function animateImgs() {
+    // Smoothly interpolate current position towards target
+    currentX += (targetX - currentX) * 0.18;
+    currentY += (targetY - currentY) * 0.18;
+    highlightItems.forEach((item) => {
+      const img = item.querySelector(".chiffres_img");
+      if (img) {
+        img.style.transform = `translate(-50%, -50%) translate(${currentX}px, ${currentY}px)`;
       }
-      highlightItems.forEach((item, i) => {
-        const img = item.querySelector(".chiffres_img");
-        const lineImg = item.querySelector(".line_highlight_img");
-        const start = i / itemCount;
-        const end = (i + 1) / itemCount;
-        if (progress > start && progress < end) {
-          item.setAttribute("bg-color", "950");
-          item.classList.add("background-color-velour");
-          if (img) img.classList.add("is-active");
-          if (lineImg) lineImg.classList.add("is-active");
-        } else {
-          item.setAttribute("bg-color", "1000");
-          item.classList.remove("background-color-velour");
-          if (img) img.classList.remove("is-active");
-          if (lineImg) lineImg.classList.remove("is-active");
+    });
+    animationFrame = requestAnimationFrame(animateImgs);
+  }
+
+  highlightItems.forEach((item) => {
+    let mouseMoveHandler;
+    item.addEventListener("mouseenter", (e) => {
+      hoveredItem = item;
+      item.setAttribute("bg-color", "950");
+      item.classList.add("background-color-velour");
+      // Only keep is-active on hovered item, remove from others
+      highlightItems.forEach((otherItem) => {
+        const otherImg = otherItem.querySelector(".chiffres_img");
+        if (otherImg) {
+          if (otherItem === item) {
+            otherImg.classList.add("is-active");
+            otherImg.style.pointerEvents = "none";
+          } else {
+            otherImg.classList.remove("is-active");
+          }
         }
       });
-    },
+      // Center on initial mouse position
+      const rect = item.getBoundingClientRect();
+      targetX = currentX = e.clientX - rect.left;
+      targetY = currentY = e.clientY - rect.top;
+      // Start animation if not already running
+      if (!animationFrame) animateImgs();
+      const lineImg = item.querySelector(".line_highlight_img");
+      if (lineImg) lineImg.classList.add("is-active");
+      // Make all .chiffres_img follow cursor smoothly
+      mouseMoveHandler = function (ev) {
+        const rect = item.getBoundingClientRect();
+        targetX = ev.clientX - rect.left;
+        targetY = ev.clientY - rect.top;
+      };
+      item.addEventListener("mousemove", mouseMoveHandler);
+    });
+    item.addEventListener("mouseleave", () => {
+      hoveredItem = null;
+      item.setAttribute("bg-color", "1000");
+      item.classList.remove("background-color-velour");
+      // Remove is-active only from this item's image
+      const img = item.querySelector(".chiffres_img");
+      if (img) {
+        img.classList.remove("is-active");
+      }
+      const lineImg = item.querySelector(".line_highlight_img");
+      if (lineImg) lineImg.classList.remove("is-active");
+      if (mouseMoveHandler) {
+        item.removeEventListener("mousemove", mouseMoveHandler);
+        mouseMoveHandler = null;
+      }
+      // Stop animation if not hovering any item
+      if (!document.querySelector(".chiffres_item:hover")) {
+        if (animationFrame) {
+          cancelAnimationFrame(animationFrame);
+          animationFrame = null;
+        }
+      }
+    });
   });
-  window.lineHighlightScrollTriggers.push(trigger);
 };

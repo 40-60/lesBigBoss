@@ -1,6 +1,7 @@
 require("../animations/steps-reveal.js")();
 require("../animations/custom-cursor.js")();
 require("../animations/line-highlight.js")();
+require("../animations/images-parallax.js")();
 
 // Select all elements with the 'event-date' attribute
 const eventDateElements = document.querySelectorAll("[event-date]");

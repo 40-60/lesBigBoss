@@ -32,8 +32,9 @@ module.exports = function accordionSteps() {
     el.setAttribute("text-color", idx === 0 ? "white" : "300");
   });
   svgs.forEach((el, idx) => {
-    el.classList.add("text-color-corail", idx === 0);
-    el.classList.remove("text-color-gs-300");
+    if (idx == 0) {
+      el.classList.add("text-color-corail");
+    }
     el.setAttribute("text-color", idx === 0 ? "400" : "300");
   });
   accordionContents.forEach(
@@ -92,11 +93,17 @@ module.exports = function accordionSteps() {
       //   el.style.opacity = idx === activeIdx ? "1" : "0";
       // });
       // Apply transform to images based on active index
-      accordionImages.forEach((el, idx) => {
-        const transformY =
-          idx === activeIdx ? -(idx * 100) + "%" : -(activeIdx * 100) + "%";
-        el.style.transform = `translateY(${transformY})`;
-      });
+      if (window.innerWidth > 991) {
+        accordionImages.forEach((el, idx) => {
+          const transformY =
+            idx === activeIdx ? -(idx * 100) + "%" : -(activeIdx * 100) + "%";
+          el.style.transform = `translateY(${transformY})`;
+        });
+      } else {
+        accordionImages.forEach((el) => {
+          el.style.transform = "";
+        });
+      }
       accordionProgress.forEach((el, idx) => {
         let start = idx * segment;
         let end = (idx + 1) * segment;
