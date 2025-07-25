@@ -3,22 +3,32 @@ const path = require("path");
 module.exports = {
   mode: "production",
   entry: {
-    ["global"]: "./src/pages/global.js",
-    ["accueil"]: "./src/pages/accueil.js",
-    ["pourquoi-participer/business"]:
+    ["global"]: "./src/global.js",
+    ["pages/accueil"]: "./src/pages/accueil.js",
+    ["pages/pourquoi-participer/business"]:
       "./src/pages/pourquoi-participer/business.js",
-    ["devenez-participant/c-level"]:
+    ["pages/devenez-participant/c-level"]:
       "./src/pages/devenez-participant/c-level.js",
-    ["a-propos/notre-equipe"]: "./src/pages/a-propos/notre-equipe.js",
-    ["a-propos/qui-sommes-nous"]: "./src/pages/a-propos/qui-sommes-nous.js",
-    ["test-page"]: "./src/test-page.js",
-    ["agenda"]: "./src/pages/agenda.js",
-    ["contact"]: "./src/pages/contact.js",
-    ["event-details"]: "./src/pages/event-details.js",
-    ["events/home"]: "./src/pages/events/home.js",
-    ["events/programme"]: "./src/pages/events/programme.js",
-    ["events/participant"]: "./src/pages/events/participant.js",
-    ["blog"]: "./src/pages/blog.js",
+    ["pages/a-propos/notre-equipe"]: "./src/pages/a-propos/notre-equipe.js",
+    ["pages/a-propos/qui-sommes-nous"]:
+      "./src/pages/a-propos/qui-sommes-nous.js",
+    ["pages/test-page"]: "./src/test-page.js",
+    ["pages/agenda"]: "./src/pages/agenda.js",
+    ["pages/contact"]: "./src/pages/contact.js",
+    ["pages/event-details"]: "./src/pages/event-details.js",
+    ["pages/events/home"]: "./src/pages/events/home.js",
+    ["pages/events/programme"]: "./src/pages/events/programme.js",
+    ["pages/events/participant"]: "./src/pages/events/participant.js",
+    ["pages/blog"]: "./src/pages/blog.js",
+    ["animations/accordion-steps"]: "./src/animations/accordion-steps.js",
+    ["animations/auto-slider"]: "./src/animations/auto-slider.js",
+    ["animations/custom-cursor"]: "./src/animations/custom-cursor.js",
+    ["animations/dots-section"]: "./src/animations/dots-section.js",
+    ["animations/images-parallax"]: "./src/animations/images-parallax.js",
+    ["animations/keyspeakers-reveal"]: "./src/animations/keyspeakers-reveal.js",
+    ["animations/line-highlight"]: "./src/animations/line-highlight.js",
+    ["animations/ordered-steps"]: "./src/animations/ordered-steps.js",
+    ["animations/steps-reveal"]: "./src/animations/steps-reveal.js",
   },
   output: {
     path: path.resolve(__dirname, "dist"),

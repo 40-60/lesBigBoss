@@ -1,4 +1,4 @@
-require("../animations/auto-slider.js")();
+require("./animations/auto-slider.js")();
 
 // Smooth scrolling with Lenis
 const lenis = new Lenis({
