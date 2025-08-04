@@ -29,6 +29,8 @@ module.exports = {
     ["animations/line-highlight"]: "./src/animations/line-highlight.js",
     ["animations/ordered-steps"]: "./src/animations/ordered-steps.js",
     ["animations/steps-reveal"]: "./src/animations/steps-reveal.js",
+    ["animations/program"]: "./src/animations/program.js",
+    ["animations/open-faq-question"]: "./src/animations/open-faq-question.js",
   },
   output: {
     path: path.resolve(__dirname, "dist"),

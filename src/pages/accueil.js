@@ -31,7 +31,7 @@ if (!video || !heading1 || !headingCorailWrapper) {
 // === Préparation du layout ===
 headingCorailWrapper.style.overflow = "hidden";
 heroVideo.style.height = "0vh";
-heading1.style.height = "9vw";
+// heading1.style.height = "9vw";
 
 // === Animation d'entrée du heading1 ===
 const splitHeading1 = SplitText.create(heading1, {
@@ -100,9 +100,12 @@ tlHeading1.fromTo(
   headingCorailWrapper,
   { height: 0 },
   {
-    height: "9vw",
+    height: () => (window.innerWidth <= 767 ? "12vw" : "9vw"),
     ...commonAnimationSettings,
-    onComplete: () => (headingCorailWrapper.style.height = "9vw"),
+    onComplete: () => {
+      headingCorailWrapper.style.height =
+        window.innerWidth <= 767 ? "12vw" : "9vw";
+    },
   },
   1
 );
@@ -111,7 +114,7 @@ tlHeading1.fromTo(
   { height: "0vh" },
   { height: "30vh", duration: 1.8, ease: "power3.inOut" },
 
-  2.5
+  2.1
 );
 
 // === Fade in du scroll-text ===
@@ -158,9 +161,9 @@ setTimeout(() => {
       },
     }
   );
-  gsap.fromTo(
+  gsap.to(
     [heading1, headingCorailWrapper],
-    { height: "9vw" },
+    // { height: "9vw" },
     {
       height: "0vw",
       scrollTrigger: {
