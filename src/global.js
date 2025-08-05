@@ -30,7 +30,6 @@ gsap.set("[prevent-flicker], [text-animation]", { visibility: "visible" });
 function logNavDropdownIndexWithCurrentUrl() {
   const dropdowns = document.querySelectorAll(".nav_link");
   const currentUrl = window.location.pathname.replace(/\/$/, ""); // retire le slash final
-  console.log("Current URL:", currentUrl);
 
   dropdowns.forEach((dropdown, idx) => {
     const links = dropdown.querySelectorAll("a[href]");
@@ -42,15 +41,6 @@ function logNavDropdownIndexWithCurrentUrl() {
         document
           .querySelectorAll(".nav_dropdown_toggle")
           [idx].classList.add("is-active");
-        console.log(
-          "Found matching link in dropdown",
-          idx,
-          "because link:",
-          linkPath,
-          "currentUrl:",
-          currentUrl
-        );
-        break;
       }
     }
   });
