@@ -4,6 +4,8 @@ module.exports = {
   mode: "production",
   entry: {
     ["global"]: "./src/global.js",
+
+    // Pages
     ["pages/accueil"]: "./src/pages/accueil.js",
     ["pages/pourquoi-participer/business"]:
       "./src/pages/pourquoi-participer/business.js",
@@ -20,6 +22,9 @@ module.exports = {
     ["pages/events/programme"]: "./src/pages/events/programme.js",
     ["pages/events/participant"]: "./src/pages/events/participant.js",
     ["pages/blog"]: "./src/pages/blog.js",
+    ["pages/faq"]: "./src/pages/faq.js",
+
+    // Animations
     ["animations/accordion-steps"]: "./src/animations/accordion-steps.js",
     ["animations/auto-slider"]: "./src/animations/auto-slider.js",
     ["animations/custom-cursor"]: "./src/animations/custom-cursor.js",

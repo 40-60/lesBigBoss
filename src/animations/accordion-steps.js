@@ -32,31 +32,14 @@ module.exports = function accordionSteps() {
     el.setAttribute("text-color", idx === 0 ? "white" : "300");
   });
   svgs.forEach((el, idx) => {
-    if (idx == 0) {
-      el.classList.add("text-color-corail");
-    }
+    el.classList.toggle("text-color-corail", idx === 0);
+    el.classList.toggle("text-color-gs-300", idx !== 0);
     el.setAttribute("text-color", idx === 0 ? "400" : "300");
   });
   accordionContents.forEach(
     (el, idx) => (el.style.height = idx === 0 ? "auto" : "0px")
   );
   accordionProgress.forEach((el) => (el.style.width = "0%"));
-  // if (window.innerWidth > 991) {
-  //   accordionImages.forEach((el) => {
-  //     el.style.position = "absolute";
-  //   });
-  // }
-  // window.addEventListener("resize", () => {
-  //   if (window.innerWidth > 991) {
-  //     accordionImages.forEach((el) => {
-  //       el.style.position = "absolute";
-  //     });
-  //   } else {
-  //     accordionImages.forEach((el) => {
-  //       el.style.position = "static";
-  //     });
-  //   }
-  // });
 
   // GSAP ScrollTrigger
   window.ScrollTrigger.create({

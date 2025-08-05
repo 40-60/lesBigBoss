@@ -6,7 +6,7 @@ module.exports = function customCursor() {
   let mouseY = 0;
 
   if (cursor) {
-    gsap.set(cursor, { xPercent: -50, yPercent: -50, autoAlpha: 0 });
+    gsap.set(cursor, { xPercent: -50, yPercent: -50, autoAlpha: 1 });
 
     function updateCursor(e) {
       if (e) {
@@ -24,8 +24,8 @@ module.exports = function customCursor() {
       const elementUnderCursor = document.elementFromPoint(mouseX, mouseY);
       const target = elementUnderCursor?.closest(".custom_cursor_trigger");
 
+      const cursorChildren = Array.from(cursor.children);
       if (target) {
-        const cursorChildren = Array.from(cursor.children);
         const targetClass = [
           "event",
           "article",
@@ -42,10 +42,10 @@ module.exports = function customCursor() {
             ? "flex"
             : "none";
         });
-
-        gsap.to(cursor, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
       } else {
-        gsap.to(cursor, { autoAlpha: 0, duration: 0.3, ease: "power2.out" });
+        cursorChildren.forEach((child) => {
+          child.style.display = "none";
+        });
       }
     }
 

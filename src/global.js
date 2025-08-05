@@ -25,3 +25,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Prevent flickering for elements with attributes
 gsap.set("[prevent-flicker], [text-animation]", { visibility: "visible" });
+
+// Fonction pour trouver l'index du .nav_dropdown contenant un lien correspondant à l'URL actuelle
+function logNavDropdownIndexWithCurrentUrl() {
+  const dropdowns = document.querySelectorAll(".nav_link");
+  const currentUrl = window.location.pathname.replace(/\/$/, ""); // retire le slash final
+  console.log("Current URL:", currentUrl);
+
+  dropdowns.forEach((dropdown, idx) => {
+    const links = dropdown.querySelectorAll("a[href]");
+
+    for (const link of links) {
+      // On compare le pathname du lien sans slash final
+      const linkPath = link.pathname.replace(/\/$/, "");
+      if (linkPath === currentUrl) {
+        document
+          .querySelectorAll(".nav_dropdown_toggle")
+          [idx].classList.add("is-active");
+        console.log(
+          "Found matching link in dropdown",
+          idx,
+          "because link:",
+          linkPath,
+          "currentUrl:",
+          currentUrl
+        );
+        break;
+      }
+    }
+  });
+}
+
+logNavDropdownIndexWithCurrentUrl();
