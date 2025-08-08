@@ -11,7 +11,7 @@ if (window.innerWidth >= 992) {
     item.classList.remove("is-hover");
 
     // Also remove is-hover from child elements
-    const img = item.querySelector(".about_quote_img");
+    const img = item.querySelector(".about_quote_img_wrapper");
     const text = item.querySelector(".about_quote_text");
     if (img) img.classList.remove("is-hover");
     if (text) text.classList.remove("is-hover");

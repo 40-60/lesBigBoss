@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 gsap.set("[prevent-flicker], [text-animation]", { visibility: "visible" });
 
 // Fonction pour trouver l'index du .nav_dropdown contenant un lien correspondant à l'URL actuelle
-function logNavDropdownIndexWithCurrentUrl() {
+function activeNavLink() {
   const dropdowns = document.querySelectorAll(".nav_link");
   const currentUrl = window.location.pathname.replace(/\/$/, ""); // retire le slash final
 
@@ -38,12 +38,22 @@ function logNavDropdownIndexWithCurrentUrl() {
       // On compare le pathname du lien sans slash final
       const linkPath = link.pathname.replace(/\/$/, "");
       if (linkPath === currentUrl) {
-        document
-          .querySelectorAll(".nav_dropdown_toggle")
-          [idx].classList.add("is-active");
+        const toggle = document.querySelectorAll(".nav_dropdown_toggle")[idx];
+        toggle.classList.add("is-active");
+        toggle.setAttribute("text-color", "400");
       }
     }
   });
 }
 
-logNavDropdownIndexWithCurrentUrl();
+// Après le chargement du Lottie
+const lottieContainer = document.querySelector(".burger_icon svg");
+if (lottieContainer) {
+  lottieContainer.style.color = "currentColor";
+  // Pour forcer tous les fills à suivre currentColor
+  lottieContainer.querySelectorAll("[fill]").forEach((el) => {
+    el.setAttribute("fill", "currentColor");
+  });
+}
+
+activeNavLink();
