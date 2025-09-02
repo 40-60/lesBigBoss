@@ -14,8 +14,11 @@ if (!eventDateElements.length || !eventDay || !eventHour || !eventMin) return;
 
 // Use the first event-date element for countdown reference
 const rawDate = eventDateElements[0].textContent.trim(); // Ex: "11/1/2025"
-const [day, month, year] = rawDate.split("/").map(Number);
-
+let [day, month, year] = rawDate.split("/").map(Number);
+// Corrige l'année sur 2 chiffres : 25 => 2025, 24 => 2024, etc.
+if (year < 100) {
+  year += 2000;
+}
 const eventDate = new Date(year, month - 1, day);
 
 // Formaté : Samedi 11 janvier 2025

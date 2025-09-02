@@ -7,8 +7,7 @@ module.exports = {
 
     // Pages
     ["pages/accueil"]: "./src/pages/accueil.js",
-    ["pages/pourquoi-participer/business"]:
-      "./src/pages/pourquoi-participer/business.js",
+    ["pages/pourquoi-participer/all"]: "./src/pages/pourquoi-participer/all.js",
     ["pages/devenez-participant/c-level"]:
       "./src/pages/devenez-participant/c-level.js",
     ["pages/a-propos/notre-equipe"]: "./src/pages/a-propos/notre-equipe.js",
@@ -22,6 +21,7 @@ module.exports = {
     ["pages/events/programme"]: "./src/pages/events/programme.js",
     ["pages/events/participant"]: "./src/pages/events/participant.js",
     ["pages/blog"]: "./src/pages/blog.js",
+    ["pages/blog-detail"]: "./src/pages/blog-detail.js",
     ["pages/faq"]: "./src/pages/faq.js",
 
     // Animations

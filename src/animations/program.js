@@ -130,7 +130,7 @@ module.exports = function orderedSteps() {
             img.style.transform = `translateY(${y}%)`;
           });
         }
-        console.log("ScrollTrigger étape:", activeIdx + 1, "/", steps);
+        //console.log("ScrollTrigger étape:", activeIdx + 1, "/", steps);
         lastIdx = activeIdx;
       }
     },

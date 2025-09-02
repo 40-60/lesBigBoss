@@ -10,17 +10,15 @@ const heading1 = document.querySelector("#heading-h1-1");
 const headingCorailWrapper = document.querySelector(".heading_corail_wrapper");
 const heroVideo = document.querySelector(".home_hero_video");
 const scrollText = document.querySelector("#scroll-text");
+const pageWrapper = document.querySelector(".page-wrapper");
 
-const start = Date.now();
+document.documentElement.scrollTop = 0; // Chrome, Firefox, etc.
+document.body.scrollTop = 0; // Safari fallback
+pageWrapper.classList.add("no_scroll");
 
-const interval = setInterval(() => {
-  document.documentElement.scrollTop = 0; // Chrome, Firefox, etc.
-  document.body.scrollTop = 0; // Safari fallback
-
-  if (Date.now() - start > 3000) {
-    clearInterval(interval);
-  }
-}, 10); // every 10ms (adjust if needed)
+setTimeout(() => {
+  pageWrapper.classList.remove("no_scroll");
+}, 4000);
 
 // Sécurité : stoppe si un élément clé manque
 if (!video || !heading1 || !headingCorailWrapper) {
@@ -176,10 +174,9 @@ setTimeout(() => {
   );
   gsap.fromTo(
     ".home_mask",
-    { yPercent: 50, scaleY: 0 },
+    { scaleY: 0 },
     {
-      yPercent: 50,
-      scaleY: 8,
+      scaleY: () => (window.innerWidth <= 767 ? 2 : 5),
       ease: "none",
       scrollTrigger: {
         trigger: "#round-shape-trigger",
