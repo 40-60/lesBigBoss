@@ -1,4 +1,5 @@
 require("../animations/steps-reveal.js")();
+require("../animations/accordion-steps.js")();
 require("../animations/custom-cursor.js")();
 require("../animations/line-highlight.js")();
 require("../animations/images-parallax.js")();

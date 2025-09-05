@@ -6,12 +6,17 @@ module.exports = function customCursor() {
   let mouseY = 0;
 
   if (cursor) {
-    gsap.set(cursor, { xPercent: -50, yPercent: -50, autoAlpha: 1 });
+    gsap.set(cursor, { xPercent: -50, yPercent: -50, autoAlpha: 0 });
 
+    let cursorShown = false;
     function updateCursor(e) {
       if (e) {
         mouseX = e.clientX;
         mouseY = e.clientY;
+        if (!cursorShown) {
+          gsap.to(cursor, { autoAlpha: 1, duration: 0.2 });
+          cursorShown = true;
+        }
       }
 
       gsap.to(cursor, {

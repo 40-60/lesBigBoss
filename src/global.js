@@ -14,7 +14,7 @@ function raf(time) {
 requestAnimationFrame(raf);
 
 // Scroll de 1px pour les heading dans la hero
-window.scrollBy(0, 10);
+// window.scrollBy(0, 10);
 
 // Check if GSAP and plugins are loaded
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,7 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Prevent flickering for elements with attributes
-gsap.set("[prevent-flicker], [text-animation]", { visibility: "visible" });
+gsap.set(
+  "[prevent-flicker], [text-animation], [text-animation-hero], [circle-hero]",
+  { visibility: "visible" }
+);
 
 // Fonction pour trouver l'index du .nav_dropdown contenant un lien correspondant à l'URL actuelle
 function activeNavLink() {

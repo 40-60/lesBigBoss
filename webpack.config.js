@@ -1,42 +1,38 @@
 const path = require("path");
+const fs = require("fs");
+
+// Fonction pour scanner récursivement le dossier src
+function getEntryPoints(dir, baseDir = dir) {
+  const entries = {};
+
+  const files = fs.readdirSync(dir);
+
+  files.forEach((file) => {
+    const fullPath = path.join(dir, file);
+    const stat = fs.statSync(fullPath);
+
+    if (stat.isDirectory()) {
+      // Récursion pour les sous-dossiers
+      Object.assign(entries, getEntryPoints(fullPath, baseDir));
+    } else if (file.endsWith(".js")) {
+      // Créer le nom d'entrée basé sur le chemin relatif
+      const relativePath = path.relative(baseDir, fullPath);
+      const entryName = relativePath.replace(/\\/g, "/").replace(/\.js$/, "");
+
+      entries[entryName] = fullPath;
+    }
+  });
+
+  return entries;
+}
+
+// Générer automatiquement tous les points d'entrée
+const srcPath = path.resolve(__dirname, "src");
+const entries = getEntryPoints(srcPath);
 
 module.exports = {
   mode: "production",
-  entry: {
-    ["global"]: "./src/global.js",
-
-    // Pages
-    ["pages/accueil"]: "./src/pages/accueil.js",
-    ["pages/pourquoi-participer/all"]: "./src/pages/pourquoi-participer/all.js",
-    ["pages/devenez-participant/c-level"]:
-      "./src/pages/devenez-participant/c-level.js",
-    ["pages/a-propos/notre-equipe"]: "./src/pages/a-propos/notre-equipe.js",
-    ["pages/a-propos/qui-sommes-nous"]:
-      "./src/pages/a-propos/qui-sommes-nous.js",
-    ["pages/test-page"]: "./src/test-page.js",
-    ["pages/agenda"]: "./src/pages/agenda.js",
-    ["pages/contact"]: "./src/pages/contact.js",
-    ["pages/event-details"]: "./src/pages/event-details.js",
-    ["pages/events/home"]: "./src/pages/events/home.js",
-    ["pages/events/programme"]: "./src/pages/events/programme.js",
-    ["pages/events/participant"]: "./src/pages/events/participant.js",
-    ["pages/blog"]: "./src/pages/blog.js",
-    ["pages/blog-detail"]: "./src/pages/blog-detail.js",
-    ["pages/faq"]: "./src/pages/faq.js",
-
-    // Animations
-    ["animations/accordion-steps"]: "./src/animations/accordion-steps.js",
-    ["animations/auto-slider"]: "./src/animations/auto-slider.js",
-    ["animations/custom-cursor"]: "./src/animations/custom-cursor.js",
-    ["animations/dots-section"]: "./src/animations/dots-section.js",
-    ["animations/images-parallax"]: "./src/animations/images-parallax.js",
-    ["animations/keyspeakers-reveal"]: "./src/animations/keyspeakers-reveal.js",
-    ["animations/line-highlight"]: "./src/animations/line-highlight.js",
-    ["animations/ordered-steps"]: "./src/animations/ordered-steps.js",
-    ["animations/steps-reveal"]: "./src/animations/steps-reveal.js",
-    ["animations/program"]: "./src/animations/program.js",
-    ["animations/open-faq-question"]: "./src/animations/open-faq-question.js",
-  },
+  entry: entries,
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
