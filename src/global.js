@@ -1,7 +1,5 @@
 require("./animations/auto-slider.js")();
 
-console.log("HELLO");
-
 // Smooth scrolling with Lenis
 const lenis = new Lenis({
   smooth: true,
