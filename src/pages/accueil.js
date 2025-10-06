@@ -125,6 +125,9 @@ setTimeout(() => {
   pageWrapper.classList.remove("no_scroll");
   document.body.classList.remove("no-scroll");
 
+  // Force ScrollTrigger refresh après déblocage du scroll
+  ScrollTrigger.refresh();
+
   gsap.fromTo(".home_hero_video", { borderRadius: "30rem" }, { borderRadius: "1.5rem", scrollTrigger: scrollTriggerSettings });
   gsap.fromTo(".home_hero_video", { height: "30vh" }, { height: "90vh", scrollTrigger: scrollTriggerSettings });
   gsap.fromTo(
