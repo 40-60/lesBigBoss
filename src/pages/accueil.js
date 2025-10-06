@@ -18,6 +18,7 @@ pageWrapper.classList.add("no_scroll");
 
 setTimeout(() => {
   pageWrapper.classList.remove("no_scroll");
+  ScrollTrigger.refresh();
 }, 4000);
 
 // Sécurité : stoppe si un élément clé manque
@@ -125,7 +126,6 @@ setTimeout(() => {
   pageWrapper.classList.remove("no_scroll");
   document.body.classList.remove("no-scroll");
 
-  // Force ScrollTrigger refresh après déblocage du scroll
   ScrollTrigger.refresh();
 
   gsap.fromTo(".home_hero_video", { borderRadius: "30rem" }, { borderRadius: "1.5rem", scrollTrigger: scrollTriggerSettings });
