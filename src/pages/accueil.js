@@ -14,12 +14,12 @@ const pageWrapper = document.querySelector(".page-wrapper");
 
 document.documentElement.scrollTop = 0; // Chrome, Firefox, etc.
 document.body.scrollTop = 0; // Safari fallback
-pageWrapper.classList.add("no_scroll");
+// pageWrapper.classList.add("no_scroll");
 
-setTimeout(() => {
-  pageWrapper.classList.remove("no_scroll");
-  ScrollTrigger.refresh();
-}, 4000);
+// setTimeout(() => {
+//   pageWrapper.classList.remove("no_scroll");
+//   ScrollTrigger.refresh();
+// }, 4000);
 
 // Sécurité : stoppe si un élément clé manque
 if (!video || !heading1 || !headingCorailWrapper) {
@@ -123,10 +123,10 @@ const scrollTriggerSettings = {
 };
 
 setTimeout(() => {
-  pageWrapper.classList.remove("no_scroll");
-  document.body.classList.remove("no-scroll");
+  // pageWrapper.classList.remove("no_scroll");
+  // document.body.classList.remove("no-scroll");
 
-  ScrollTrigger.refresh();
+  // ScrollTrigger.refresh();
 
   gsap.fromTo(".home_hero_video", { borderRadius: "30rem" }, { borderRadius: "1.5rem", scrollTrigger: scrollTriggerSettings });
   gsap.fromTo(".home_hero_video", { height: "30vh" }, { height: "90vh", scrollTrigger: scrollTriggerSettings });
