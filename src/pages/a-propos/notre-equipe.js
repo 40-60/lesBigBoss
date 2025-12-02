@@ -22,7 +22,7 @@ const setActiveProfile = (item) => {
   if (linkedin.href.includes("linkedin.com/in/")) {
     activeLinkedin.href = linkedin.href;
     activeLinkedin.classList.remove("hide");
-    console.log("LinkedIn URL found for this member:", linkedin.href);
+    // console.log("LinkedIn URL found for this member:", linkedin.href);
   } else {
     activeLinkedin.classList.add("hide");
   }
