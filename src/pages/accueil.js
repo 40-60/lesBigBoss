@@ -177,7 +177,7 @@ const headings = document.querySelectorAll(".heading-style-display_hero.text-col
 
 let currentStep = 0;
 const totalSteps = headings.length - 1;
-const delayFirst = 3; // délai spécial pour le step 1
+const delayFirst = 2.5; // délai spécial pour le step 1
 const delayBetween = 2; // délai pour tous les autres
 
 function getAnimTarget(el) {
@@ -210,12 +210,12 @@ function animateStep() {
 // Reset initial pour éviter tout sursaut
 headings.forEach(el => {
   const target = getAnimTarget(el);
+  
   gsap.set(target, { yPercent: 0 });
 });
 
 // Fonction récursive pour gérer le délai dynamique
 function loop() {
-  // choisir le délai selon le step
   const currentDelay = currentStep === 0 || currentStep === 1 ? delayFirst : delayBetween;
 
   setTimeout(() => {
@@ -224,7 +224,6 @@ function loop() {
   }, currentDelay * 1000);
 }
 
-// Démarrage du carrousel
 loop();
 
 
