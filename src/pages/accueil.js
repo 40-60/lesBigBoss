@@ -174,30 +174,59 @@ setTimeout(() => {
 
 // === Carrousel de headings ===
 const headings = document.querySelectorAll(".heading-style-display_hero.text-color-corail");
+
 let currentStep = 0;
-const totalSteps = 3; // nombre de "slides" avant de reset
-const delayBetween = 2; // en secondes (1s anim + 1s pause)
+const totalSteps = headings.length - 1;
+const delayFirst = 3; // délai spécial pour le step 1
+const delayBetween = 2; // délai pour tous les autres
+
+function getAnimTarget(el) {
+  const mask = el.querySelector(".word-mask");
+  return mask || el;
+}
 
 function animateStep() {
   currentStep++;
+
+  // reset et recommence à 1
   if (currentStep > totalSteps) {
-    gsap.set(headings, { yPercent: 0 });
+    headings.forEach(el => {
+      const target = getAnimTarget(el);
+      gsap.set(target, { yPercent: 0 });
+    });
     currentStep = 1;
   }
-  headings.forEach((el) => {
-    gsap.to(el, {
+
+  headings.forEach(el => {
+    const target = getAnimTarget(el);
+    gsap.to(target, {
       yPercent: -100 * currentStep,
       duration: 0.8,
-      ease: "power3.inOut",
+      ease: "power3.inOut"
     });
   });
 }
 
-// Démarre le carrousel
-animateStep();
-setTimeout(() => {
-  setInterval(animateStep, delayBetween * 1000);
-}, 100);
+// Reset initial pour éviter tout sursaut
+headings.forEach(el => {
+  const target = getAnimTarget(el);
+  gsap.set(target, { yPercent: 0 });
+});
+
+// Fonction récursive pour gérer le délai dynamique
+function loop() {
+  // choisir le délai selon le step
+  const currentDelay = currentStep === 0 || currentStep === 1 ? delayFirst : delayBetween;
+
+  setTimeout(() => {
+    animateStep();
+    loop(); // appel récursif pour la prochaine étape
+  }, currentDelay * 1000);
+}
+
+// Démarrage du carrousel
+loop();
+
 
 function initGlowingInteractiveDotsGrid() {
   document.querySelectorAll("[data-dots-container-init]").forEach((container) => {
